@@ -1,6 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import "@tanstack/react-table";
 import { RowData } from "@tanstack/react-table";
+import { z } from "zod";
+
+type SafeParseReturnType<T> =
+  | {
+      success: true;
+      data: T;
+    }
+  | {
+      success: false;
+      error: z.ZodError;
+    };
+
 declare module "@tanstack/react-table" {
   interface TableMeta<TData extends RowData> {
     updateData: (
@@ -19,6 +31,7 @@ declare module "@tanstack/react-table" {
     type?: "text" | "number" | "select";
     required?: boolean;
     options?: { label: string; value: string }[];
+    validation?: (value: TValue) => SafeParseReturnType<TValue>;
   }
 }
 

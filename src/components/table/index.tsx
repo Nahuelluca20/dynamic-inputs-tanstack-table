@@ -10,6 +10,7 @@ import { useState } from "react";
 import CellInput from "../inputs/cell-input";
 import CellEdit from "../cells/cell-edit";
 import { CellFooter } from "../cells/cell-footer";
+import z from "zod";
 
 export default function TableComponent() {
   const [data, setData] = useState(() => [...defaultData]);
@@ -23,7 +24,16 @@ export default function TableComponent() {
     }),
     columnHelper.accessor("title", {
       header: "Title",
-      meta: { type: "text", required: true },
+      meta: {
+        type: "text",
+        required: true,
+        validation: (value: string) =>
+          z
+            .string()
+            .min(4, { message: "Title must be at least 4 characters" })
+            .safeParse(value),
+      },
+      // @ts-expect-error - CellInput is not assignable to Cell
       cell: CellInput,
     }),
     columnHelper.accessor("category", {
@@ -31,6 +41,7 @@ export default function TableComponent() {
       meta: {
         type: "select",
         required: true,
+        validation: (value: string) => z.string().safeParse(value),
         options: [
           { value: "beauty", label: "beauty" },
           { value: "fragrances", label: "fragrances" },
@@ -38,21 +49,49 @@ export default function TableComponent() {
           { value: "kitchen-accessories", label: "kitchen-accessories" },
         ],
       },
+      // @ts-expect-error - CellInput is not assignable to Cell
       cell: CellInput,
     }),
     columnHelper.accessor("price", {
       header: "Price",
-      meta: { type: "number", required: true },
+      meta: {
+        type: "number",
+        required: true,
+        validation: (value: string | number) =>
+          z
+            .number()
+            .min(1, { message: "Price must be a positive number" })
+            .safeParse(Number(value)),
+      },
+      // @ts-expect-error - CellInput is not assignable to Cell
       cell: CellInput,
     }),
     columnHelper.accessor("discountPercentage", {
       header: "Discount Percentage",
-      meta: { type: "number", required: true },
+      meta: {
+        type: "number",
+        required: true,
+        validation: (value: string | number) =>
+          z
+            .number()
+            .min(1, { message: "Price must be a positive number" })
+            .safeParse(Number(value)),
+      },
+      // @ts-expect-error - CellInput is not assignable to Cell
       cell: CellInput,
     }),
     columnHelper.accessor("rating", {
       header: "Rating",
-      meta: { type: "number", required: true },
+      meta: {
+        type: "number",
+        required: true,
+        validation: (value: string | number) =>
+          z
+            .number()
+            .min(1, { message: "Price must be a positive number" })
+            .safeParse(Number(value)),
+      },
+      // @ts-expect-error - CellInput is not assignable to Cell
       cell: CellInput,
     }),
     columnHelper.display({
