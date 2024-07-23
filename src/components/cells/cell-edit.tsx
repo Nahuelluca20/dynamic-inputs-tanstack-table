@@ -9,7 +9,7 @@ export default function CellEdit({
   table: Table<Product>;
 }) {
   const meta = table.options.meta;
-  const setEditedRows = (e: MouseEvent<HTMLButtonElement>) => {
+  const setEditedRows = (e: React.MouseEvent<HTMLButtonElement>) => {
     const elName = e.currentTarget.name;
     meta?.setEditedRows((old: []) => ({
       ...old,

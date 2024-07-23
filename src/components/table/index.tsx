@@ -8,7 +8,8 @@ import { Product } from "./types";
 import { data as defaultData } from "./data";
 import { useState } from "react";
 import CellInput from "../inputs/cell-input";
-import CellEdit from "../inputs/cell-edit";
+import CellEdit from "../cells/cell-edit";
+import { CellFooter } from "../cells/cell-footer";
 
 export default function TableComponent() {
   const [data, setData] = useState(() => [...defaultData]);
@@ -93,6 +94,20 @@ export default function TableComponent() {
         setData(setFilterFunc);
         setOriginalData(setFilterFunc);
       },
+      addRow: () => {
+        const newRow: Product = {
+          id: Math.floor(Math.random() * 10000),
+          title: "",
+          category: "",
+          price: 0,
+          discountPercentage: 0,
+          rating: 0,
+          stock: 0,
+        };
+        const setFunc = (old: Product[]) => [...old, newRow];
+        setData(setFunc);
+        setOriginalData(setFunc);
+      },
     },
   });
 
@@ -130,6 +145,13 @@ export default function TableComponent() {
             </tr>
           ))}
         </tbody>
+        <tfoot>
+          <tr>
+            <th colSpan={table.getCenterLeafColumns().length} align="right">
+              <CellFooter table={table} />
+            </th>
+          </tr>
+        </tfoot>
       </table>
     </div>
   );

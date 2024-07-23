@@ -12,6 +12,7 @@ declare module "@tanstack/react-table" {
     setEditedRows: React.Dispatch<React.SetStateAction<object>>;
     revertData: (rowIndex: number, isCancel: boolean) => void;
     removeRow: (rowIndex: number) => void;
+    addRow: () => void;
   }
 
   interface ColumnMeta<TData extends RowData, TValue> {
